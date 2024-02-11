@@ -4,13 +4,13 @@ tags:
   - Maven
   - gradle
 private: false
-updated_at: '2023-05-13T09:56:14+09:00'
+updated_at: '2024-02-11T16:36:56+09:00'
 id: 61ea8dc2e4e434f53f99
 organization_url_name: null
 slide: false
 ignorePublish: false
 ---
-# はじめに
+## はじめに
 
 普段Mavenを使ってJavaのプロジェクトをビルドしていますが、新規ライブラリを作成するにあたり
 
@@ -18,6 +18,7 @@ ignorePublish: false
 - 既存のMavenプロジェクトからGradleでビルドしたJarを参照
 
 を試してみました。
+
 初めてGradleを触ったので、Mavenしか触ったことない方が新たにGradleを利用する際の参考になれば幸いです。
 
 ## 動作環境
@@ -29,8 +30,7 @@ Apache Maven 3.9.1
 
 ## Gradleプロジェクトの作成
 
-`gradle init`でプロジェクトを作成します。  
-[Gradle公式](https://docs.gradle.org/current/samples/sample_building_java_libraries.html)のJavaライブラリの構築例を参考にしています。  
+`gradle init`でプロジェクトを作成します。[Gradle公式](https://docs.gradle.org/current/samples/sample_building_java_libraries.html)のJavaライブラリの構築例を参考にしています。  
 
 ※今回は`gradle-sample`ディレクトリにプロジェクトを作成しました。
 
@@ -110,8 +110,7 @@ BUILD SUCCESSFUL in 38s
 
 ## build.gradle
 
-最終的な`build.gradle`は以下です。  
-調整内容について解説します。
+最終的な`build.gradle`は以下です。
 
 ```build.gradle
 plugins {
@@ -152,7 +151,8 @@ java {
 
 ### プラグインの調整
 
-`maven-publish`を新たに追加します。  
+`maven-publish`を新たに追加します。
+
 こちらのプラグインを追加する事で、ビルドアーティファクトをMavenリポジトリに公開する事が可能となります。  
 
 ```build.gradle
@@ -193,10 +193,10 @@ The uploadArchives task and the maven plugin are deprecated.
 > Removal of the uploadArchives task
 The uploadArchives task was used in combination with the legacy Ivy or Maven publishing mechanisms. It has been removed in Gradle 7. You should migrate to the maven-publish or ivy-publish plugin instead.
 
-
 ### build.gradleのpublish内容の調整
 
 以下内容を`build.gradle`に追加します。
+
 ここでの`groupId`、`artifactId`、`version`はJarを参照するプロジェクトの`pom.xml`の指定と対応しています。
 
 ```build.gradle
@@ -232,9 +232,9 @@ BUILD SUCCESSFUL in 765ms
 
 ```pom.xml
 <dependency>
-	<groupId>com.sample.yoyoyo-pg</groupId>
-	<artifactId>jarSample</artifactId>
-	<version>1.0.0</version>
+    <groupId>com.sample.yoyoyo-pg</groupId>
+    <artifactId>jarSample</artifactId>
+    <version>1.0.0</version>
 </dependency>
 ```
 
@@ -242,7 +242,8 @@ BUILD SUCCESSFUL in 765ms
 
 ## おわりに
 
-はじめてのGradleでしたが、Mavenを多少触っているお陰でそこまで手間取ることなくライブラリの準備を行う事が出来ました。  
+はじめてのGradleでしたが、Mavenを多少触っているお陰でそこまで手間取ることなくライブラリの準備を行う事が出来ました。
+
 もし内容に不適切な点等ありましたら、お知らせ頂けますと幸いです。
 
 ## 参考資料

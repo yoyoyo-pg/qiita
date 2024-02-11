@@ -4,13 +4,13 @@ tags:
   - lambda
   - CDK
 private: false
-updated_at: '2023-12-08T07:01:50+09:00'
+updated_at: '2024-02-11T16:41:18+09:00'
 id: aa7cdaa678d74c6842f9
 organization_url_name: null
 slide: false
 ignorePublish: false
 ---
-# はじめに
+## はじめに
 
 今回の話は、筆者の私が SRE として Lambda、DynamoDB、API-Gateway 等を用いた、よくある構成の自社内のサーバレスなアプリケーションを、より開発・管理しやすい形への変更を目指している、という話になります。
 
@@ -41,15 +41,15 @@ Lambda 関連の運用フローは元々以下の状態でした。
 
 将来的には Lambda 等、AWS 上のプラットフォームを利用したアプリケーションの開発がより社内で進む可能性もあるのと、現在 CDK によるリソースの IaC 化を SRE チームとして進めている事もあり、ソースコード管理に加えて CDK 化も実施する事としました。
 
-## CDKのスタック構成の紹介 
+## CDKのスタック構成の紹介
 
-ここからは、今回用意した CDK の詳細を記載します。  
+ここからは、今回用意した CDK の詳細を記載します。
+
 Lambda に限らずリソースを扱う為に`serveless`リポジトリとしています。
 
-以下は CDK プロジェクトの全体像です。（`cdk.json`、`package.json`等のファイルは割愛）  
-typescript で`CDKv2`を利用しています。
+以下は CDK プロジェクトの全体像です。（`cdk.json`、`package.json`等のファイルは割愛）typescript で`CDKv2`を利用しています。
 
-```
+```powershell
 serverless
 ├─ bin
 │　└─ serverless.ts
@@ -70,6 +70,7 @@ serverless
 ├─ parameter
 │  └─ parameter.ts
 ```
+
 - `bin`、`lib`はお馴染みの通り
 - `parameter.ts`に環境別パラメータを記載
 
@@ -171,6 +172,7 @@ export class LambdaFunctionStack extends Stack {
 `parameter.ts`に、各種リソースを定義しています。  
 
 ここで登場するのが`release-status`という概念です。
+
 こちらは「主に開発チームが触る事を想定した」`lambda`ディレクトリ配下の`release-status.ts`のパラメータを各環境別に`lambdaSource: string`として渡す形としています。
 
 ```parameter/parameter.ts
@@ -206,7 +208,8 @@ export const prodParam: LambdaStackProps = {
 
 ### カスタムConstruct
 
-`lib/appX-construct.ts`という形で各種 Construct を宣言しています。  
+`lib/appX-construct.ts`という形で各種 Construct を宣言しています。
+
 アプリケーション別のリソース・権限付与をひとまとめにして宣言しています。
 
 ここでの注目ポイントは先程の`release-status.ts`を参照し渡って来た`lambdaSource`です。  
@@ -241,7 +244,6 @@ export class appB extends Construct {
   }
 }
 ```
-
 
 ## 開発時の大まかな流れ
 

@@ -6,31 +6,30 @@ tags:
   - aws-cdk
   - CDK
 private: false
-updated_at: '2023-04-29T21:57:49+09:00'
+updated_at: '2024-02-11T16:21:56+09:00'
 id: 2384b57c03b28de864e0
 organization_url_name: null
 slide: false
 ignorePublish: false
 ---
-# はじめに
+## はじめに
 
-最近、CDKのベストプラクティスを久しぶりに読み返していたのですが、  
-`grant`メソッドなる存在を知りました。
+最近、CDKのベストプラクティスを久しぶりに読み返していたのですが、`grant`メソッドなる存在を知りました。
 
-https://aws.amazon.com/jp/blogs/news/best-practices-for-developing-cloud-applications-with-aws-cdk/
+<https://aws.amazon.com/jp/blogs/news/best-practices-for-developing-cloud-applications-with-aws-cdk/>
 
 こちらのメソッドを利用する事で、例えばCDKのリソース定義時に
 
 - インラインポリシーを記載
 - リソースにアタッチ
 
-をしなくとも、IAMのインラインポリシーやアクセスポリシーの実装が可能です。  
+をしなくとも、IAMのインラインポリシーやアクセスポリシーの実装が可能です。
+
 今回はこちらの`grant`を利用し、記述量の削減をした例をご紹介します。
 
 ## 対象リソース
 
-今回構築するリソースは以下  
-ECSの周辺リソースを対象としています。
+今回構築するリソースは以下。ECSの周辺リソースを対象としています。
 
 - ECRリポジトリA
 - ロググループB
@@ -92,10 +91,10 @@ export class sampleStack extends Stack {
 }
 ```
 
-
 ## 権限付与の為の関数を用意
 
-今回は権限付与を関数`addPolicyToTaskExecRole`として定義しています。  
+今回は権限付与を関数`addPolicyToTaskExecRole`として定義しています。
+
 引数として、先に宣言した`taskExecRole`、`repository`、`logGroup`を渡します。
 
 ```typescript:sample-stack.ts
@@ -105,8 +104,7 @@ export class sampleStack extends Stack {
 
 ## grantを利用しない場合
 
-各種ポリシー付与の例は以下です。  
-IAMコンソール上から、直に値を入力するのと変わらない位の手間がかかります。
+各種ポリシー付与の例は以下です。IAMコンソール上から直に値を入力するのと変わらない位の手間がかかります。
 
 ```typescript
 /** タスク実行ロールに各種権限を付与 */
@@ -149,19 +147,17 @@ export const addPolicyForTaskExecRole = (taskExecRole : Role, repository : Repos
 ```
 
 Repositoryコンストラクトには`grantPull(granttee)`、`grantPullPush(granttee)`といったメソッドが用意されています。
-https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_ecr.Repository.html
+<https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_ecr.Repository.html>
 
 LogGroupコンストラクトには`grantRead(grantee)`、`grantWrite(grantee)`といったメソッドが用意されています。
-https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_logs.LogGroup.html
-
+<https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_logs.LogGroup.html>
 
 ## おわりに
 
 - CDKに権限の生成を任せられる
 - コード量の削減に繋がる
 - 構築の手間を省ける
- 
-等々、メリット満載だと感じた為、今後は積極的に使っていきたい機能です。  
-ただし、権限を広めに与えてしまう可能性もあります。  
-細かな制御が必要な場合は`addToPolicy`で対応した方が良い場面もあるかもしれません。
 
+等々、メリット満載だと感じた為、今後は積極的に使っていきたい機能です。  
+
+ただし、権限を広めに与えてしまう可能性もあります。細かな制御が必要な場合は`addToPolicy`で対応した方が良い場面もあるかもしれません。

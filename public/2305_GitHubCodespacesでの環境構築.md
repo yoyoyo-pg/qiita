@@ -6,13 +6,13 @@ tags:
   - devcontainer
   - Codespaces
 private: false
-updated_at: '2023-05-03T00:46:08+09:00'
+updated_at: '2024-02-11T16:33:59+09:00'
 id: 0daeca3a799d3f7e133e
 organization_url_name: null
 slide: false
 ignorePublish: false
 ---
-# はじめに
+## はじめに
 
 以前書いたこちらAWS CDKとecspressoを利用してコンテナを簡単に構築する為の記事ですが、
 
@@ -28,7 +28,6 @@ https://github.com/yoyoyo-pg/cdk-ecspresso
 
 ### ecspresso
 
-前回記事でも簡単に紹介しておりますが、  
 **ECSサービス、タスクに関わる最小限のリソースをコード管理**する事ができるツールです。
 
 https://github.com/kayac/ecspresso
@@ -41,14 +40,15 @@ https://zenn.dev/fujiwara/books/ecspresso-handbook-v2
 
 https://docs.github.com/ja/codespaces/overview
 
-以前はベータ版でしたが、現在は一般ユーザーも無料で使えるようになった為、今回初めて利用しました。  
+以前はベータ版でしたが、現在は一般ユーザーも無料で使えるようになった為、今回初めて利用しました。
+
 開発環境としてコンテナが利用される為、今回は`devcontainer.json`と`Dockerfile`を定義しています。
 
 ## 構築自動化の為に用意した内容
 
 プロジェクトの`ルートディレクトリ/.devcontainer/`配下に以下2ファイルを用意しました。
 
-```
+```powershell
 cdk-ecspresso-project/
 ├── .devcontainer
 │   ├── Dockerfile
@@ -73,10 +73,10 @@ RUN curl -sL -O https://github.com/kayac/ecspresso/releases/download/v2.0.0/ecsp
 
 ```json:devcontainer.json
 {
-	"name": "Node.js & TypeScript",
-	"build": {
-		"dockerfile": "Dockerfile"
-	},
+  "name": "Node.js & TypeScript",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
     "postCreateCommand": "npm install"
 }
 ```
@@ -91,7 +91,7 @@ RUN curl -sL -O https://github.com/kayac/ecspresso/releases/download/v2.0.0/ecsp
 - 最後に、`aws configure`だけ設定すれば直ぐにお手持ちのAWSアカウントにインフラリソースを構築できる状態となります。
 - Codespaces内からAWSアカウントに対しての詳細のコンテナデプロイ手順はリポジトリ内の`README.md`に記載してあります。
 
-https://github.com/yoyoyo-pg/cdk-ecspresso/tree/master/.devcontainer
+<https://github.com/yoyoyo-pg/cdk-ecspresso/tree/master/.devcontainer>
 
 ## おわりに
 

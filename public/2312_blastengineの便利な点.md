@@ -4,15 +4,16 @@ tags:
   - mail
   - blastengine
 private: false
-updated_at: '2024-01-02T09:16:24+09:00'
+updated_at: '2024-02-11T16:38:30+09:00'
 id: f128a2e2dbd78be84f74
 organization_url_name: null
 slide: false
 ignorePublish: false
 ---
-# はじめに
+## はじめに
 
-最近、社内のあるアプリケーション内で blastengine を使い始めているので、利用してみて便利だった点を記載します。  
+最近、社内のあるアプリケーション内で blastengine を使い始めているので、利用してみて便利だった点を記載します。
+
 私自身メール初心者ですので、メール初心者の方がメールを触ってみるきっかけにでもなれば幸いです。
 
 ## blastengineとは
@@ -35,7 +36,6 @@ https://blastengine.jp/
 blastengine の配信コンソール上からは「配信ID、配信日時、最終更新日時、メールアドレス、ステータス、応答コード、応答メッセージ、更新履歴」が見れます。  
 
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/1425a174-e4b1-50ad-cdae-0303032b5ac8.png)
-
 
 その中でも、特に便利だなと思ったのは以下。
 
@@ -67,8 +67,8 @@ blastengine の配信コンソール上からは「配信ID、配信日時、最
 
 ### トライアルプランだと配信可能アドレスが制限されている点
 
-blastengineの場合、トライアルプランだと「配信先のアドレス登録」が必要です。 
-   
+blastengineの場合、トライアルプランだと「配信先のアドレス登録」が必要です。
+
 場合によっては「いちいちアドレスを登録しないといけないので不便」と感じる事もあるとは思います。ただ個人的には、たとえば検証やテスト時に不用意に「メール配信」させたくない時に便利そうだと感じています。
 
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/f8bc57bc-9d70-82f9-607b-689ab4aeb137.png)
@@ -106,6 +106,6 @@ blastengine SDK
 
 https://github.com/blastengineMania
 
-blastengine API 
+blastengine API
 
 https://blastengine.jp/documents/

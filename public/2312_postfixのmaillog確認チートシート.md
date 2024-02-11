@@ -4,13 +4,13 @@ tags:
   - mail
   - postfix
 private: false
-updated_at: '2023-12-10T12:58:26+09:00'
+updated_at: '2024-02-11T16:42:19+09:00'
 id: 1c08eb4045408bf8f5b4
 organization_url_name: null
 slide: false
 ignorePublish: false
 ---
-# はじめに
+## はじめに
 
 Postfixの`maillog`の配信数を集計する為のチートシートです。
 
@@ -111,4 +111,4 @@ $ awk '{print $1, $2, substr($3, 1, 5)}' filter-maillog | uniq -c
 
 ## 参考文献
 
-http://unyouchan.blog.jp/archives/1492098.html
+<http://unyouchan.blog.jp/archives/1492098.html>

@@ -5,19 +5,19 @@ tags:
   - SSM
   - ecspresso
 private: false
-updated_at: '2023-04-11T23:20:05+09:00'
+updated_at: '2024-02-11T16:25:35+09:00'
 id: 1b562124e6b5d62f57d4
 organization_url_name: null
 slide: false
 ignorePublish: false
 ---
-# はじめに
+## はじめに
 
 コンテナデプロイツールである`ecspresso`ですが、ecspresso v2が昨年末にリリースされました！
 
 ecspresso handbookでも紹介されている**ecspresso v1とv2の変更点**の中でも、今回はSSMパラメータストア参照を利用しました。
 
-https://zenn.dev/fujiwara/books/ecspresso-handbook-v2/viewer/v1-v2
+<https://zenn.dev/fujiwara/books/ecspresso-handbook-v2/viewer/v1-v2>
 
 ## 何のために利用したか？
 
@@ -36,7 +36,6 @@ ecspressoを元々デプロイ時に利用している事もあり、今回の�
 - 以下の形でパラメータを作成します。
 
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/203a0b48-c171-1b7a-f59e-8c33dc4b123f.png)
-
 
 ## ecspressoの設定ファイルにSSMを利用する為の設定を追記
 

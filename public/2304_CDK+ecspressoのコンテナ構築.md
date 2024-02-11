@@ -6,21 +6,17 @@ tags:
   - CDK
   - ecspresso
 private: false
-updated_at: '2023-05-03T00:40:31+09:00'
+updated_at: '2024-02-11T16:31:16+09:00'
 id: 5921801e7f674f4e1023
 organization_url_name: null
 slide: false
 ignorePublish: false
 ---
-# はじめに
+## はじめに
 
-最近、AWS CDKでコンテナ関連のリソース構築をしておりますが、  
-**コンテナリソースをどこまでCDKで実装するべきか**  
-が大きな悩みの種でした。
+最近、AWS CDKでコンテナ関連のリソース構築をしておりますが、**コンテナリソースをどこまでCDKで実装するべきか**が大きな悩みの種でした。
 
-そこで、コンテナ周辺のリソースをCDK、コンテナ本体のリソースをecspressoで構築した為、  
-構築内容の紹介となっています。
-
+今回、コンテナ周辺のリソースをCDK、コンテナ本体のリソースをecspressoで構築した為、構築内容の紹介となっています。
 
 ## ecspressoとは
 
@@ -36,8 +32,8 @@ CDKを使う中で「CDKでサービス定義、タスク定義をするのは�
 
 といった構築の仕方をしています。
 
-
 ## 動作環境
+
 cdk 2.59.0
 ecspresso v2.1.0
 
@@ -56,7 +52,6 @@ ecspresso v2.1.0
 
 - CDKで関連リソースを定義し、デプロイ
 - ecspressoでサービス定義、タスク定義をし、デプロイ
-
 
 ## スタックの作成
 
@@ -127,9 +122,7 @@ export class CdkEcspressoStack extends Stack {
 }
 ```
 
-**CDKではコンテナ周辺リソースを定義**という事で、  
-VPC、サブネット、ALB、セキュリティグループやターゲットグループだけでなく、  
-ECSクラスターや各種ロールも定義します。
+**CDKではコンテナ周辺リソースを定義**という事で、VPC・サブネット・ALB・セキュリティグループやターゲットグループだけでなく、ECSクラスターや各種ロールも定義します。
 
 ECRへのpush・pullやログ吐き出し等の権限付与を考えると、各種ロールやロググループはCDK側で明示的に生成すると便利だと考えています。
 
@@ -137,14 +130,11 @@ ECRへのpush・pullやログ吐き出し等の権限付与を考えると、各
 
 AWS CDKの[ベストプラクティス](https://aws.amazon.com/jp/blogs/news/best-practices-for-developing-cloud-applications-with-aws-cdk/)の一つとして、**自動で生成されるリソース名を使用し、物理的な名前を使用しない**というものがあります。  
 
-リソース名を明示する方が便利な場面もありますが、明示する事でリソースのUPDATE時に失敗してしまう事もあります。  
-なので、ベストプラクティスにもある通り、可能ならば自動生成名で良いのかなと思います。  
+リソース名を明示する方が便利な場面もありますが、明示する事でリソースのUPDATE時に失敗してしまう事もあります。なので、ベストプラクティスにもある通り、可能ならば自動生成名で良いのかなと思います。
 
-ただ**外部処理からの参照が必要な際に、決め打ちでリソース名・IDを指定できなくなる**点には注意が必要です。  
-それこそスタックやコンストラクトといった、大きな単位での変更を加えた際に、自動生成名が変わり、外部処理からの参照箇所も修正となると面倒なので、今回はecspresso v2からの新機能である「SSMパラメータストア参照」機能を利用しています。
+ただ**外部処理からの参照が必要な際に、決め打ちでリソース名・IDを指定できなくなる**点には注意が必要です。それこそスタックやコンストラクトといった、大きな単位での変更を加えた際に自動生成名が変わり、外部処理からの参照箇所も修正となると面倒なので、今回はecspresso v2からの新機能である「SSMパラメータストア参照」機能を利用しています。
 
-その為、ecspressoでデプロイ時に使うパラメータをSSMパラメータとして保存しています。
-パラメータストアへの保存処理により、CDKによる自動生成の名称が変更になった時の差異を吸収する事が可能です。
+その為、ecspressoでデプロイ時に使うパラメータをSSMパラメータとして保存しています。パラメータストアへの保存処理により、CDKによる自動生成の名称が変更になった時の差異を吸収する事が可能です。
 
 ```typescript
 // SSMパラメータの設定
@@ -157,12 +147,11 @@ new ssm.StringParameter(this, 'ContainerTgParam', { parameterName: '/ecs/cdk-ecs
 new ssm.StringParameter(this, 'LogGroupParam', { parameterName: '/ecs/cdk-ecspresso/log-group-name', stringValue: logGroup.logGroupName });
 ```
 
-
 ## スタックの構築
 
 まずは`cdk deploy`でスタックを構築します。
 
-```
+```powershell
 cdk deploy CdkEcspressoStack 
 ```
 
@@ -172,7 +161,6 @@ VSCode上では以下の形でログが出ます。
 CloudFormation上の表示は以下。
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/2aa920a0-32ae-8e20-c21a-7e7b7cd812de.png)
 
-
 パラメータストアにも値が保管されます。
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/c826e8d9-2281-43ea-3890-01b88afa3b2c.png)
 
@@ -180,7 +168,7 @@ CloudFormation上の表示は以下。
 
 デプロイの為に、以下3つのファイルを用意します。
 
-```ecspresso.yml
+```yaml:ecspresso.yml
 region: ap-northeast-1
 cluster: cdk-ecspresso
 service: nginx
@@ -191,7 +179,8 @@ plugins:
   - name: ssm
 ```
 
-以下はサービス定義設定ファイルです。  
+以下はサービス定義設定ファイルです。
+
 ターゲットグループARN、セキュリティグループID、サブネットIDはパラメータストアから取得しています。
 
 ```ecs-service-def.json
@@ -234,7 +223,8 @@ plugins:
 }
 ```
 
-以下はタスク定義設定ファイルです。  
+以下はタスク定義設定ファイルです。
+
 ロググループ名、タスク実行ロールARN、タスクロールARNはパラメータストアから取得しています。
 
 ```ecs-task-def.json
@@ -283,15 +273,17 @@ plugins:
 }
 ```
 
-```"{​​{​​ ssm `/ecs/cdk-ecspresso/sg-id` }​​}​​"```といった形でSSMパラメータストア参照を利用しています。  
+```"{​​{​​ ssm `/ecs/cdk-ecspresso/sg-id` }​​}​​"```といった形でSSMパラメータストア参照を利用しています。
+
 ecspressoでのSSMパラメータストア参照については、以下記事にIAMの設定内容など記載しましたので、宜しければご覧ください。
 
 https://qiita.com/yoyoyo_pg/items/1b562124e6b5d62f57d4
 
 ## ecspressoでサービス定義、タスク定義をデプロイ
 
-最後に`ecspresso deploy`をして、ターミナル上で実行結果を見守ります。  
-最終的に`Service is stable now. Completed!`となり、デプロイ成功となります。
+最後に`ecspresso deploy`をして、ターミナル上で実行結果を見守ります。
+
+`Service is stable now. Completed!`となり、デプロイ成功となります。
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/c1b55789-64f8-63a5-5b0a-46bee332aae2.png)
 
 ブラウザ上からアクセスし確認
@@ -305,12 +297,9 @@ https://qiita.com/yoyoyo_pg/items/1b562124e6b5d62f57d4
 ## 20230503追記
 
 上記デプロイをハンズオン形式で簡単にお試し頂けるように、GitHubリポジトリを公開しました。
-
-https://github.com/yoyoyo-pg/cdk-ecspresso
+<https://github.com/yoyoyo-pg/cdk-ecspresso>
 
 ## 参考文献
 
-https://github.com/kayac/ecspresso
-
-https://zenn.dev/fujiwara/books/ecspresso-handbook-v2
-
+<https://github.com/kayac/ecspresso>
+<https://zenn.dev/fujiwara/books/ecspresso-handbook-v2>
