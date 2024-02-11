@@ -7,7 +7,7 @@ tags:
   - lambda
   - APIGateway
 private: false
-updated_at: '2022-06-26T20:27:25+09:00'
+updated_at: '2024-02-11T12:07:36+09:00'
 id: 39c6100646b4526be60d
 organization_url_name: null
 slide: false
@@ -89,7 +89,6 @@ glossary-sampleという名前のAPIをタイプ「HTTP API」で用意しまし
 
 ![2022-06-25-22-45-11.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/e635bc9a-27d1-e350-808a-59879ffb7ae4.png)
 
-
 Lambdaとの統合に関しては、全て同一Lambdaを呼び出すようにしています。
 
 ---
@@ -99,7 +98,7 @@ Lambdaとの統合に関しては、全て同一Lambdaを呼び出すように�
 実装自体に時間をかけたくなかった事もあり、Lambdaを選択しました。
 詳しくは省略しますが、Lambdaの実行ロール（IAM）にDynamoDBへのアクセス権を付与しています。
 
-```lambda_function.py
+```python:lambda_function.py
 import json
 import boto3
 from boto3.dynamodb.conditions import Key, Attr

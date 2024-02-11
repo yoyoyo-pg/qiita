@@ -5,7 +5,7 @@ tags:
   - Tomcat
   - VSCode
 private: false
-updated_at: '2022-09-10T00:40:41+09:00'
+updated_at: '2024-02-11T12:10:51+09:00'
 id: 8d340eea5a71627c3c31
 organization_url_name: null
 slide: false
@@ -17,8 +17,7 @@ ignorePublish: false
 
 ![2022-06-27-23-14-16.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/80ca559f-af34-f6cf-11a0-65b2841cd889.png)
 
-
-代わりに推奨されている拡張機能である`Community Server Connectors`を利用し、tomcatのサーバを立ててsample.warをデプロイしたので、その紹介記事となります。
+代わりに推奨されている拡張機能である[Community Server Connectors](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-community-server-connector&ssr=false#overview)を利用し、tomcatのサーバを立ててsample.warをデプロイしたので、その紹介記事となります。
 
 ---
 
@@ -28,8 +27,7 @@ ignorePublish: false
 
 >このVSCode拡張機能は、リモートサーバープロトコルベースのサーバーコネクタを提供します。このコネクタは、コミュニティランタイムと、Apache Felix、Karaf、Tomcatなどのサーバーを開始、停止、公開、または制御できます。
 
-
-RedHatが提供している拡張機能のようです。
+RedHatが提供している拡張機能となっております。
 
 こちらの拡張機能をインストールすると、Remote Server Protocol UIが同時にインストールされます。
 
@@ -75,10 +73,8 @@ mvn clean install
 ビルド完了時
 ![2022-06-27-23-01-23.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/7aa50a03-015e-9bd0-78bb-913a167f85e0.png)
 
-
 ビルドが完了すると、Community Server Connectorが起動できるようになります。
 ![2022-06-27-23-01-53.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/4f9464b5-d2b8-4cec-3d2a-8b8622de05b1.png)
-
 
 ---
 
@@ -123,6 +119,3 @@ Start Serverをクリックすると...
 
 `localhost:8080/sample/`で動作確認完了！
 ![2022-06-27-23-26-22.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/40f62a50-8fa4-af9b-9329-39ea2b08d33d.png)
-
-
-

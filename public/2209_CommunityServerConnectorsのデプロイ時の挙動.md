@@ -4,13 +4,13 @@ tags:
   - Tomcat
   - VSCode
 private: false
-updated_at: '2022-09-20T14:58:26+09:00'
+updated_at: '2024-02-11T13:23:02+09:00'
 id: 2e8719e9a649aa93a617
 organization_url_name: null
 slide: false
 ignorePublish: false
 ---
-# はじめに
+## はじめに
 
 前回の記事の続きです。
 
@@ -23,7 +23,7 @@ https://qiita.com/yoyoyo_pg/items/8d340eea5a71627c3c31
 - VSCodeインストール済（Windows版）
 - 拡張機能Community Server Connectors`v0.25.6`がインストール済
 - 拡張機能Remote Server Protocol UI`v0.23.13`がインストール済
-- 今回は検証としてTomcat8.5を立てます。 
+- 今回は検証としてTomcat8.5を立てます。
 
 ## インストール時
 
@@ -40,9 +40,7 @@ https://qiita.com/yoyoyo_pg/items/8d340eea5a71627c3c31
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/19553233-b271-62f0-5958-656a0692c46a.png)
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/40ff94b2-e3b8-42fe-9451-e3fcd695fe99.png)
 
-
-
-・この段階では、ディレクトリ内が以下状態となっていました。
+この段階では、ディレクトリ内が以下状態となっていました。
 
 - `C:\Users\ユーザー名\.rsp\redhat-community-server-connector\runtimes\downloads`ディレクトリが生成
   - apache-tomcat-8.5.50.zipがダウンロード
@@ -50,7 +48,7 @@ https://qiita.com/yoyoyo_pg/items/8d340eea5a71627c3c31
   - フォルダ`tomcat-8.5.50`が展開
 - `C:\Users\akita\.rsp\redhat-community-server-connector\servers`ディレクトリが生成
   - apache-tomcat-8.5.50というファイルが生成
- 
+
 ```json:apache-tomcat-8.5.50
 {
   "args.override.boolean": "false",
@@ -66,7 +64,7 @@ https://qiita.com/yoyoyo_pg/items/8d340eea5a71627c3c31
 }
 ```
 
-ちなみに、GUIから`Edit Server`を選択すると、`C:\Users\ユーザ名\AppData\Local\Temp`内にある`tmpServerConnector-apache-tomcat-8.5.50~~~.json`といったファイルが開かれますが、上記ファイル`apache-tomcat-8.5.50`とリンクしているようです。
+GUIから`Edit Server`を選択すると、`C:\Users\ユーザ名\AppData\Local\Temp`内にある`tmpServerConnector-apache-tomcat-8.5.50~~~.json`といったファイルが開かれますが、上記ファイル`apache-tomcat-8.5.50`とリンクしているようです。
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/8efaf104-1cd5-4500-7652-47934d3ab8d0.png)
 
 ※こちらについては`C:\Users\ユーザー名\.rsp\redhat-community-server-connector\runtimes`配下の`URLTransportCache.cacheIndex.properties`内に記載がありました。
@@ -86,8 +84,6 @@ https://qiita.com/yoyoyo_pg/items/8d340eea5a71627c3c31
 `localhost:8080/sample/`でsampleを表示
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/2f209136-e319-7e48-4004-84cc8ec70ca2.png)
 
-
-
 ## Add Deployment（Exploded）
 
 Add Deploymentとして、Explodedを選択した場合の挙動を確認します。
@@ -96,13 +92,11 @@ Add Deploymentとして、Explodedを選択した場合の挙動を確認しま�
 すると、sampleフォルダのみ`webapps`配下に展開されます。
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/53f0f0d4-d161-0849-22fd-6652b8d38b8a.png)
 
-ちなみに、**元のファイルを変更した際、自動的にwebapps内のファイルも更新されるのか？**
-という点が気になったので、元の指定ファイル`index.html`を編集してみました。
+ちなみに、**元のファイルを変更した際、自動的にwebapps内のファイルも更新されるか**が気になったので、元の指定ファイル`index.html`を編集してみました。
 
 すると、`publish`が自動で走りファイル間の同期が行われます。
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/6aabda8d-9267-ff8f-d057-a0c90f4f1c95.png)
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/5e8f7b20-b15c-f5de-a491-5a854df049f1.png)
-
 
 `localhost:8080/sample/`で見てみると、`webapps`内にファイルの変更が反映されていることが分かります。
 
@@ -111,9 +105,7 @@ Add Deploymentとして、Explodedを選択した場合の挙動を確認しま�
 - 同一バージョンの複数のtomcatを登録する事も可能のようです。
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/3b3fa135-3a51-114e-cde6-7743fc6a3175.png)
 
-
 ### まとめ
 
-- 気軽にサーバーを構築・破棄出来る点は非常だと感じます。
+- 気軽にサーバーを構築・破棄出来る点は非常だと感じました。
 - また、ファイル変更時に自動的に`publish`が走る点も便利そうです。
-  - 今後は、静的ファイルだけでなくclassファイルを同期する事で、tomcatに自動デプロイ出来ないか？という点も調べていこうかなと思います。

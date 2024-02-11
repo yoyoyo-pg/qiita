@@ -12,6 +12,15 @@ npx qiita pull
 npx qiita preview
 ```
 
+### Qiita CLIセットアップ
+
+```powershell
+# Qiita CLIのインストール
+npm install @qiita/qiita-cli --save-dev
+# Qiita上でトークンを発行しログイン
+npx qiita login
+```
+
 ## 記事作成方法
 
 - `新規記事作成`をクリック

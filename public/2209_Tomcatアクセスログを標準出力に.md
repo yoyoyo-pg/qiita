@@ -6,30 +6,36 @@ tags:
   - CloudWatch
   - ECS
 private: false
-updated_at: '2022-12-31T13:46:28+09:00'
+updated_at: '2024-02-11T15:21:34+09:00'
 id: 725b153fa974206557c3
 organization_url_name: null
 slide: false
 ignorePublish: false
 ---
-# はじめに
+## はじめに
 
-ECS上で動作するコンテナについては標準出力にログが流れるよう設定する必要がありますが、Tomcatアクセスログはデフォルトで標準出力には流れません。
-本記事ではTomcatのアクセスログを標準出力とし、CloudWatch Logsに出力する方法を紹介します。
+- ECS上で動作するコンテナについては標準出力にログが流れるよう設定する必要がありますが、Tomcatアクセスログはデフォルトで標準出力には流れません。
+- 本記事ではTomcatのアクセスログを標準出力とし、CloudWatch Logsに出力する方法を紹介します。
 
 ## 環境
+
 - Java11
 - tomcat9.0
 
 ## 実施内容
 
-方法としては非常にシンプルです。
+方法としては以下です。
+
 - アクセスログを日付毎に出力するのではなく、固定ファイル名とする
 - 固定ファイルと標準出力のシンボリックリンクを作成する
 
+::: note info
+202402追記： serverl.xmlに directory="/dev" prefix="stdout"と直接標準出力を指定することが可能です。その場合は固定ファイルの作成とシンボリックリンク作成は不要です。
+:::
+
 ## server.xmlの用意
 
-server.xmlのAccessLogValveを以下のような設定にする事で、アクセスログを固定ファイル名「access_log.txt」に出力するよう設定します。
+`server.xml`のAccessLogValveを以下のような設定にする事で、アクセスログを固定ファイル名`access_log.txt`に出力するよう設定します。
 
 ```server.xml
 <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
@@ -40,7 +46,7 @@ rotatable="false" fileDateFormat="" />
 
 ## Dockerfileの用意
 
-server.xmlの上書きを行い、その上で標準出力とaccess_log.txtのシンボリックリンクを作成します。
+`server.xml`の上書きを行い、その上で標準出力と`access_log.txt`のシンボリックリンクを作成します。
 
 ```:Dockerfile
 FROM tomcat:9.0-jdk11-corretto
@@ -90,6 +96,6 @@ ECSのタスク定義内のログドライバーはデフォルトの`awslogs`�
 
 ## 参考文献
 
-https://aws.amazon.com/jp/premiumsupport/knowledge-center/ecs-container-logs-cloudwatch/
+<https://aws.amazon.com/jp/premiumsupport/knowledge-center/ecs-container-logs-cloudwatch/>
 
-http://site.m-bsys.com/code/tomcat-accesslog
+<https://github.com/docker-library/tomcat>

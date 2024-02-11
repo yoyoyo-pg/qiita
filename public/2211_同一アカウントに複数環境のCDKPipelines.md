@@ -6,34 +6,32 @@ tags:
   - aws-cdk
   - CDK
 private: false
-updated_at: '2022-11-10T09:11:42+09:00'
+updated_at: '2024-02-11T15:49:15+09:00'
 id: ddda3fdb809712deb70d
 organization_url_name: null
 slide: false
 ignorePublish: false
 ---
-# はじめに
+## はじめに
 
-複数人でのCDK開発を進める上でcdk pipelinesは非常に便利ですが、
-**同一アカウント＆同一リージョン上で環境別のcdk pipelinesを走らせる**といった要件で検討した際に
+複数人でのCDK開発を進める上でcdk pipelinesは非常に便利ですが、**同一アカウント＆同一リージョン上で環境別のcdk pipelinesを走らせる**といった要件で検討した際に
 
 - gitのブランチ運用
 - 環境変数の定義方法
 - cdk pipelinesを動的に生成する為のスタック定義方法
 
-等々、運用上考慮した点や工夫した点があった為、実際の構築例を紹介する記事となります。
+など、運用上考慮した点や工夫した点があった為、実際の構築例を紹介する記事です。
 
 ## 対象
+
 - 環境別（dev、test等）のcdk pipelinesを構築しようとお考えの方
-- cdk内の環境変数を使いまわす方法を模索中の方
+- CDk内の環境変数を使いまわす方法を模索中の方
 
 ## 検証環境
-cdk version
-2.50.0 (build 4c11af6)
-node -v 
-v18.12.1
-tsc -v
-Version 4.8.4
+
+cdk 2.50.0
+node 18.12.1
+typescript 4.8.4
 
 ## ゴール
 
@@ -42,9 +40,9 @@ Version 4.8.4
 ▼実際に作成したpipeline
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/244ddc7c-8511-627a-0d90-262943288c28.png)
 
-
 最終的にCloudFormationとしては2種類のスタックが出来上がります。
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/5f16fe39-3c61-e025-d991-78511f7c0dee.png)
+
 - cdk pipelinesとして`〇〇(環境名)PipelinesStack`
 - cdk pipelines内でデプロイされる`〇〇(環境名)PipelinesDeploy-CdkSampleStack`
 ※今回はECRリポジトリ一つだけ生成される`CdkSampleStack`をサンプルとして用意しています。
@@ -59,8 +57,7 @@ Version 4.8.4
 今回はGitHubとの連携でcdk pipelinesを構成する為、Connectionの作成をしています。
 Connectionの作成方法に関してはこちら↓の記事を参考にしています。
 
-https://qiita.com/sugimount-a/items/540d130fe7cfea15bf13
-
+<https://qiita.com/sugimount-a/items/540d130fe7cfea15bf13>
 
 ## 環境別のパラメータを用意
 
@@ -69,7 +66,7 @@ https://qiita.com/sugimount-a/items/540d130fe7cfea15bf13
 
 ローカルPCからcdkコマンドを実施する場合は、例えば`cdk diff -c stage=test1`といった形で`stage`のパラメータを指定することで、各環境に応じた操作を可能とします。
 
-```cdk.json
+```json:cdk.json
 {
   "app": "npx ts-node --prefer-ts-exts bin/cdk_sample.ts",
   "versionReporting": false,
@@ -137,6 +134,7 @@ https://qiita.com/sugimount-a/items/540d130fe7cfea15bf13
 ## 実装例
 
 主に以下3ファイルを利用します。
+
 - `cdk_sample.ts`・・・デプロイ対象のスタックの定義、環境変数の受け渡し
 - `cdk_pipelines-stack.ts`・・・cdk pipelines用のスタック
 - `cdk_sample-stack.ts`・・・cdk pipelines内でデプロイされるアプリケーションのサンプルスタック
@@ -147,8 +145,7 @@ https://qiita.com/sugimount-a/items/540d130fe7cfea15bf13
 
 `stage`パラメータを取得し、`stage`パラメータの値に応じた各環境毎のパラメータを`cdk.json`から取得しています。
 
-
-```cdk_sample.ts
+```typescript:cdk_sample.ts
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
@@ -175,7 +172,7 @@ PipelineStackをnewする際に```new PipelinesStack(app, `${stage}PipelinesStac
 
 他にも、変数`context`をスタック宣言時に渡す事で、`cdk.json`内の各種パラメータをPipelinesStack内で再利用できるようにしています。
 
-```cdk.json
+```json:cdk.json
     "test1": {
       "envName": "test1",
       "repository": "yoyoyo-pg/cdkSample",
@@ -189,7 +186,7 @@ PipelineStackをnewする際に```new PipelinesStack(app, `${stage}PipelinesStac
 各環境別にcdk pipelinesを生成する為のスタックです。
 `constructor`として`context`を受け取れるようにしているのが、通常のスタックからの変更点となります。
 
-```cdk_pipelines-stack.ts
+```typescript:cdk_pipelines-stack.ts
 import * as pipelines from "aws-cdk-lib/pipelines";
 import { Construct } from 'constructs';
 import { Stack, StackProps, Stage, StageProps } from 'aws-cdk-lib';
@@ -230,7 +227,7 @@ export class CdkDeploymentStage extends Stage {
 `context`として受け取った情報はGithubとcdk pipelinesの紐づけの為の設定値として、
 ここでは`repository`、`branch`、`connectionArn`の受け渡しを行っています。
 
-```cdk_pipelines-stack.ts
+```typescript:cdk_pipelines-stack.ts
 // cdk.json内の値を利用
 input: pipelines.CodePipelineSource.connection(context.repository, context.branch, {
     connectionArn: context.connectionArn,
@@ -239,22 +236,23 @@ input: pipelines.CodePipelineSource.connection(context.repository, context.branc
 
 また、cdk pipelines内からのスタックのデプロイステージを定義していますが、ここでも`context`の情報を利用しています。
 
-```cdk_pipelines-stack.ts
+```typescript:cdk_pipelines-stack.ts
 // add stage
 cdkPipelines.addStage(
     new CdkDeploymentStage(this, `${context.envName}PipelinesDeploy`, props)
 );
 ```
 
-ここで`envName+PipelinesDeploy`とすることで、「cdk pipelinesのスタック」と「cdk pipelinesからデプロイされたスタック」をCloudFormation上でセットで確認しやすいようにしています。
+ここで`envName + PipelinesDeploy`とすることで、「cdk pipelinesのスタック」と「cdk pipelinesからデプロイされたスタック」をCloudFormation上でセットで確認しやすいようにしています。
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/78795ad8-a7d2-ffd9-094c-496fb3be9c10.png)
 
 ## cdk_sample-stack.ts
 
 cdk pipelines内でデプロイしているスタックです。
+
 今回は特別なことをしている訳ではなく、サンプル用のECRのリポジトリを作成しています。
 
-```cdk_sample-stack.ts
+```typescript:cdk_sample-stack.ts
 import * as ecr from 'aws-cdk-lib/aws-ecr';
 import { Construct } from 'constructs';
 import { Stack, StackProps } from 'aws-cdk-lib';
@@ -269,16 +267,15 @@ export class CdkSampleStack extends Stack {
 }
 ```
 
+## 環境別のデプロイについて
 
-## 各環境別のデプロイについて
-
-ここからが、今回の肝の部分となります。
+ここからが今回の肝の部分です。
 
 - まず、一番最初のcdk pipelines構築（手元PCから`cdk deploy`）の際は`stage`に各環境名を指定します。
   - `cdk deploy -c stage=test1`といった形です。
 - また、先程用意した`test1_env`、`test2_env`ブランチでは`cdk.json`内の`stage`のデフォルト値をそれぞれ`dev`から`test1`、`test2`に変更してプッシュします。
 
-```cdk.json
+```json:cdk.json
     "stage" : "dev",
     "dev": {
       "envName": "dev",
@@ -288,23 +285,22 @@ export class CdkSampleStack extends Stack {
     },
 ```
 
-`stage`を変更しデフォルト値を各環境別にすることで、
-各ブランチにプッシュが走った際に正常にパイプラインが動作する事となります。
+`stage`を変更しデフォルト値を各環境別にすることで、各ブランチにプッシュが走った際に正常にパイプラインが動作する事となります。
 
-
-この運用における注意点は、例えば`test1_env`ブランチで作業→それを`main`にマージといった手順を踏んでしまうと
-`main`ブランチの`stage`のパラメータも変更される事となってしまう点です。
+この運用における注意点は、例えば`test1_env`ブランチで作業し、それを`main`にマージといった手順を踏んでしまうと`main`ブランチの`stage`のパラメータも変更される事となってしまう点です。
 
 なので、例としては
-- 各環境共通で変更を加えたい場合
-  - `main`から新しくブランチを切り、変更した後`main`にマージ
-  - その後、`main`から`test1_env`、`test2_env`にマージ
-- `test1_env`→`main`や`test2_env`→`main`の流れのマージはしない
 
-等のルールを設ける必要が出てくる点には注意が必要です。
+- 各環境共通で変更を加えたい場合
+  - `main`から新しく`develop`ブランチを切り、変更後に`main`に対してマージ
+  - その後、`main`から`test1_env`と`test2_env`に対してマージ
+- `test1_env`から`main`や、`test2_env`から`main`に対するマージはしない
+
+等のルールを設ける必要がある点には注意が必要です。
 
 ※ちなみに、`stage`のパラメータを環境別に書き換えなかった場合、cdk pipelines内のビルド時に以下エラーが発生してしまいます。
-```
+
+```powershell
 No stacks match the name(s) test1PipelinesStack
 [14:07:53] Error: No stacks match the name(s) test1PipelinesStack
     at CdkToolkit.validateStacksSelected (/usr/local/lib/node_modules/aws-cdk/lib/cdk-toolkit.ts:708:13)
@@ -316,18 +312,18 @@ No stacks match the name(s) test1PipelinesStack
 ## おわりに
 
 最終的なポイントとしては以下です。
+
 - 同一アカウント＆同一リージョンの場合はスタック名識別の為の工夫が必要
   - その為、`cdk.json`に各環境別の値を入れておく
 - ただし`cdk.json`に各環境別の値を入れておくだけだと、cdk pipelines上ではデフォルトの環境設定値でパイプラインが走ってしまう
   - 環境別にブランチを用意した上で、ブランチ別にcdk.jsonの`stage`の値を変更しておく
 
 `cdk.json`を上手く活用することで、環境が異なる場合にも再利用しやすい形を実現出来そうです。
-今回は「同一アカウント＆リージョン」という事で各ブランチ上でパラメータを分けるやり方にしましたが、やはり環境別にアカウントが分けられると理想だなと思いました。
+
+今回は「同一アカウント＆リージョン」という事で各ブランチ上でパラメータを分けるやり方としましたが、やはり環境別にアカウントが分けられたり、各環境に対して順にデプロイしていけるパイプラインが構築できると理想だと思います。
 
 ## 参考資料
 
-https://docs.aws.amazon.com/cdk/v2/guide/cdk_pipeline.html
-
-https://qiita.com/sugimount-a/items/540d130fe7cfea15bf13
-
-https://logmi.jp/tech/articles/326730
+<https://docs.aws.amazon.com/cdk/v2/guide/cdk_pipeline.html>
+<https://qiita.com/sugimount-a/items/540d130fe7cfea15bf13>
+<https://logmi.jp/tech/articles/326730>

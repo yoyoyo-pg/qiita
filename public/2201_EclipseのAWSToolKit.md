@@ -4,13 +4,14 @@ tags:
   - AWS
   - Eclipse
 private: false
-updated_at: '2024-01-03T12:19:51+09:00'
+updated_at: '2024-02-11T11:46:07+09:00'
 id: 9c6b6de2cd86e61b7b99
 organization_url_name: null
 slide: false
 ignorePublish: false
 ---
-# 目次
+
+## もくじ
 
 1. IAMユーザの作成+ロールの作成
 2. EclipseマーケットプレイスでAWS ToolKit For Eclipseをインストール
@@ -22,6 +23,7 @@ ignorePublish: false
 IAMユーザ、またはロールに`AmazonDynamoDBFullAccess`を付与します。
 
 ## 2. EclipseマーケットプレイスでAWS ToolKit For Eclipseをインストール
+
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/2eaf5824-72db-07c7-bd74-e34cbc0ce761.png)
 
 こちらをインストールします。
@@ -44,5 +46,5 @@ IAMユーザ、またはロールに`AmazonDynamoDBFullAccess`を付与します
 
 ## おわりに
 
-リージョンを明記していない場合、オレゴンのDynamoDBに"my-favorite-movies-table"テーブルが作成されます。
-Javaの記述と作成されたテーブルを見比べながら、SDKの学習していくのが良いかなと思います。
+リージョンを明記していない場合、オレゴンのDynamoDBに`my-favorite-movies-table`テーブルが作成されます。
+Javaの記述と作成されたテーブルを見比べながら、SDKの学習していくのに使えそうです。

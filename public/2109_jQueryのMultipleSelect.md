@@ -5,7 +5,7 @@ tags:
   - jQuery
   - multiple-select
 private: false
-updated_at: '2024-01-03T12:14:22+09:00'
+updated_at: '2024-02-11T11:41:52+09:00'
 id: 4859dfbbc512ef653828
 organization_url_name: null
 slide: false
@@ -20,7 +20,6 @@ ignorePublish: false
 
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/7b128be9-8b01-673d-5353-b8ffea5fa25a.png)　![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/d017bcfb-e405-da95-d9d1-6204020ffacc.png)　![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/3393ad52-1ce3-10e0-7584-5d9889714ebc.png)
 
-
 ## コード
 
 公式のサンプルを少し弄ったものになります。
@@ -29,7 +28,6 @@ ignorePublish: false
 1. 各種JS,CSSのインポート
 2. selectタグ内に`multiple="multiple"`の指定
 3. 初期化処理の`$('select').multipleSelect()`
-
 
 ```index.html
 <!doctype html>
@@ -86,6 +84,7 @@ ignorePublish: false
 ### 2.selectタグ内にmultiple="multiple"の指定
 
 選択肢の複数選択を可能にするために、multiple属性を指定します。
+
 ```html
 <select multiple="multiple">
 </select>
@@ -156,15 +155,11 @@ Multipe Selectのオプションの一つです。
     },
 ```
 
+## おわりに
 
-## 最後に
 リッチなUIを簡単に実現できるので、非常に便利です。
 
 ## 参考文献
 
-Multiple Select 公式サイト
-https://multiple-select.wenzhixin.net.cn/
-
-Github - wenzhixin / multiple-select
-https://github.com/wenzhixin/multiple-select
-
+[Multiple Select 公式サイト](https://multiple-select.wenzhixin.net.cn/)
+[Github - wenzhixin / multiple-select](https://github.com/wenzhixin/multiple-select)

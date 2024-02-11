@@ -6,7 +6,7 @@ tags:
   - reveal.js
   - VSCode
 private: false
-updated_at: '2022-09-03T17:10:16+09:00'
+updated_at: '2024-02-11T12:01:23+09:00'
 id: 413729f47854af2e644b
 organization_url_name: null
 slide: false
@@ -19,6 +19,8 @@ ignorePublish: false
 - エンジニアらしくGitHubで管理してみた
 - そのままプレゼン資料を作れる状態にした  
 という話です
+
+この記事のプレゼン資料は[こちら](https://yoyoyo-pg.github.io/vscode-reveal-sample/)
 
 ---
 
@@ -103,13 +105,13 @@ VSCodeの場合「vscode-reveal」という拡張機能をインストールす�
 
 基本的にマークダウンの内容を書き換えなくて大丈夫なので、日々の「インプット」「アウトプット」をシームレスに行えるのが魅力的な部分です！
 
--- 
+--
 
 また、今回の記事は「vscode-reveal」でスライドとして使える状態にした`.md`ファイルを、そのままコピペして持ってきています（Qiita用に書き換えなくて良いので便利！）  
 
 ※唯一`.md`ファイルの上部に記載する、vscode-revealのスライド用の記載だけはQiita投稿時に消しています。
 
-```
+```md
 ---
 theme: "night"
 title: "GitHubとVSCodeの話"
@@ -125,8 +127,7 @@ slideNumber: true
 GitHub＆GitHubPagesで今回の記事のファイル＆vscode-revealで生成されたプレゼンページを公開しました！
 
 - `.md`ファイル置き場
-https://github.com/yoyoyo-pg/vscode-reveal-sample
+<https://github.com/yoyoyo-pg/vscode-reveal-sample>
 
 - プレゼンページ（reveal.jsでのプレゼン資料の使用感をお試し頂けます！）
-https://yoyoyo-pg.github.io/vscode-reveal-sample/
-
+<https://yoyoyo-pg.github.io/vscode-reveal-sample/>
