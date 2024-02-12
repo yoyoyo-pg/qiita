@@ -7,7 +7,7 @@ tags:
   - lambda
   - APIGateway
 private: false
-updated_at: '2024-02-11T12:07:36+09:00'
+updated_at: '2024-02-12T16:29:09+09:00'
 id: 39c6100646b4526be60d
 organization_url_name: null
 slide: false
@@ -31,6 +31,8 @@ AWSマネージドでのWEB API開発に興味のある方に読んでもらえ�
 
 「まずは動くAPIを！」という事で、サーバーサイドの実装のみ行っています。
 LambdaはPythonで実装しています。
+
+![basic-web-api.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/c5602b7a-cc7b-a0a0-be97-6d6ce38eeb5e.png)
 
 ---
 
