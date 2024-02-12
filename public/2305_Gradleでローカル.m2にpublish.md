@@ -4,7 +4,7 @@ tags:
   - Maven
   - gradle
 private: false
-updated_at: '2024-02-11T16:36:56+09:00'
+updated_at: '2024-02-12T12:34:53+09:00'
 id: 61ea8dc2e4e434f53f99
 organization_url_name: null
 slide: false
@@ -244,7 +244,7 @@ BUILD SUCCESSFUL in 765ms
 
 はじめてのGradleでしたが、Mavenを多少触っているお陰でそこまで手間取ることなくライブラリの準備を行う事が出来ました。
 
-もし内容に不適切な点等ありましたら、お知らせ頂けますと幸いです。
+今回の構築内容のGitHubリポジトリは[こちら](https://github.com/yoyoyo-pg/gradle-publish-local-sample)です。
 
 ## 参考資料
 
