@@ -7,7 +7,7 @@ tags:
   - CDK
   - CodeArtifact
 private: false
-updated_at: '2024-02-13T00:41:20+09:00'
+updated_at: '2024-02-17T17:03:59+09:00'
 id: 1647d65f5b4ae4ae4270
 organization_url_name: null
 slide: false
@@ -16,7 +16,7 @@ ignorePublish: false
 ## はじめに
 
 - CodeArtifact上のMavenプライベートリポジトリに対して、GitHubへのPushにより、JARファイルの公開が可能なパイプラインを今回構築しました。
-- 前半でアーキテクチャの紹介と、後半でインフラコードの紹介を行います。
+- アーキテクチャの紹介とインフラコードの紹介を行います。
 
 ## 構築したもの
 
@@ -33,15 +33,17 @@ ignorePublish: false
 
 [参考](https://docs.aws.amazon.com/ja_jp/codeartifact/latest/ug/welcome.html)
 
-- 普段だとローカルのPCで保持するようなパッケージを、共有のパッケージリポジトリとして公開する事が可能です。
-- リポジトリのエンドポイントを公開する事で、リポジトリに対するパッケージの公開や、リポジトリ内のパッケージの利用が可能です。
+- 普段だとローカルのPCで保持するようなパッケージ（npmやMavenなど）を、共有のパッケージリポジトリとして公開する事が可能です。
+- リポジトリのエンドポイントを指定する事で、リポジトリに対してパッケージの公開や、リポジトリ内のパッケージの利用が可能です。
 - ドメインと呼ばれるグループの中に、パッケージを保持するリポジトリ作成する形です。
+- 使用例として、チーム開発や個人開発を想定し、プライベートなJarライブラリとしての利用する事が可能です。
 
-今回は`yoyoyo-pg`ドメインの中に`gradle-publish-sample`リポジトリを用意しています。
+### 今回構築したCodeArtifactのリポジトリ
+
+- `yoyoyo-pg`ドメインの中に`gradle-publish-sample`リポジトリを用意しています。
+- 今回構築しているJAR公開のパイプラインを通して、こちらのリポジトリにJARが公開されます。
 
 ![codeartifact1.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/7dc84800-64c2-a458-8094-940b0f25e9c5.png)
-
-今回の例だと、チーム開発や個人開発を想定したプライベートなJarライブラリとしての利用が想定されます。
 
 ## Codestar connections
 
@@ -51,11 +53,15 @@ ignorePublish: false
 
 [参考](https://docs.aws.amazon.com/ja_jp/dtconsole/latest/userguide/welcome-connections.html)
 
-- GitHub以外にも、サードパーティーツールとAWSリソースを関連付ける事が可能です。
+- サードパーティーのコードリポジトリとの接続設定を行う事が出来ます。
+- コードリポジトリ内の変更があった際に、連携しているCodePipelineをトリガー出来るようになります。
+
+### 今回構築した接続設定
+
+- 今回は`yoyoyo-pg-connection`という名前で接続設定を作成しています。
+- こちらの接続設定を用いて、GitHubリポジトリ上のソースコードをCodePipelineで取得しています。
 - GitHubの場合は、一度接続設定を作成した後に「GitHub側」で許可の操作をする必要があります。
   - この操作については後の構築手順で解説します。
-
-今回は`yoyoyo-pg-connection`という名前で接続設定を作成しています。
 
 ![codestar-connections.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/2b6b4db5-cc3b-bd90-cc2d-42ee4133d390.png)
 
@@ -68,7 +74,13 @@ ignorePublish: false
 
 [参考](https://docs.aws.amazon.com/ja_jp/codepipeline/latest/userguide/welcome.html)
 
-今回だとGitHubからのソース取得を`Source`ステージで行い、CodeBuildの呼び出しを`Build`ステージで行います。
+### 今回構築したパイプライン
+
+- GitHubからのソース取得を`Source`ステージで行い、CodeBuildの呼び出しを`Build`ステージで行います。
+- `Source`ステージ
+  - 先程の接続設定を用いて、GitHubからソースコードの取得を行います。
+- `Build`ステージ
+  - 後述するCodeBuildを呼び出し、Gradleプロジェクトとして構成されているソースコードのビルドとJARの公開処理を行います。
 
 ![codepipeline.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/5acadb15-861b-0d78-0743-6f975ca812f2.png)
 
@@ -81,12 +93,12 @@ ignorePublish: false
 
 [参考](https://docs.aws.amazon.com/ja_jp/codebuild/latest/userguide/welcome.html)
 
-今回の`buildspec`は以下です。簡単に説明すると、
+## 今回構築したビルド処理
 
-- CodeArtifactのトークンを取得
-- その後CodeArtifactに対してJARを公開
-
-という処理をしています。
+- CodeBuildとしては主に以下二つの処理をしています。
+  - CodeArtifactのトークンを取得
+  - その後CodeArtifactに対してJARを公開
+- `Buildspec`の内容は以下です。
 
 ```yaml:buildspec.yml
 version: 0.2
@@ -106,22 +118,24 @@ phases:
       - gradle publishAllPublicationsToMavenRepository
 ```
 
+- CodeBuildの他の構築内容については後述します。
+
 ---
 
-## リポジトリの紹介
+## CDKリポジトリの紹介
 
 上記構成についての初期構築、初期パイプラインの起動時の手順を紹介する前に、今回用意したCDKコードの紹介を進めていきます。
 
-### リポジトリの構成
+### ディレクトリの構成
 
 - 先にも紹介した通り、インフラ構成(AWS CDK)とアプリケーションコード(Gradleプロジェクト)をセットでGitHub上のリポジトリで保持しています。
-- `gradle-sample`配下がGradleプロジェクトで、それ以外はCDKのプロジェクトのファイルとなっています。
+- 通常のAWS CDKのプロジェクトに加え、`gradle-sample`配下がGradleプロジェクトとなっております。
 
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/6a0d53ba-5f7d-daaf-ca02-383ba59a4241.png)
 
-### CDKのスタックとコンストラクトの構成
+## CDKのスタックとコンストラクトの構成
 
-- `GradlePublishSampleStack`の中で、今回構築する4つのリソースをコンストラクトとして用意しています。
+- `GradlePublishSampleStack`の中で、今回構築する4つのリソースをカスタムコンストラクトとして用意しています。
 
 ```typescript:bin/gradle-publish-sample.ts
 import 'source-map-support/register';
@@ -133,6 +147,8 @@ new GradlePublishSampleStack(app, 'GradlePublishSampleStack', {
   env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
 });
 ```
+
+- カスタムコンストラクトは`CodeStar`、`CodeArtifact`、`CodeBuild`、`CodePipeline`の4つです。
 
 ```typescript:lib/gradle-publish-sample-stack.ts
 import * as cdk from 'aws-cdk-lib';
@@ -164,7 +180,15 @@ export class GradlePublishSampleStack extends cdk.Stack {
 
 #### codestar.ts
 
-- L1コンストラクトを利用し、接続設定を作成しています。
+- L1コンストラクト`CfnConnection`を利用し、接続設定を作成しています。
+- 接続設定としてCodePipelineで利用する為、`CfnConnection`として外部から参照できるようにしています。
+
+```typescript
+// 外部からの参照用リソース
+readonly CfnConnection : CfnConnection
+...
+this.CfnConnection = codeStarConnection;
+```
 
 ```typescript:codestar.ts
 import { StackProps } from "aws-cdk-lib";
@@ -192,7 +216,7 @@ export class CodeStar extends Construct {
 
 #### codeartifact.ts
 
-- L1コンストラクトを利用し、ドメインとリポジトリを定義しています。
+- L1コンストラクト`CfnDomain`と`CfnRepository`を利用し、CodeArtifactのドメインとリポジトリを定義しています。
 
 ```typescript:codeartifact.ts
 import * as codeartifact from 'aws-cdk-lib/aws-codeartifact';
@@ -217,8 +241,12 @@ export class CodeArtifact extends Construct {
 
 #### codebuild.ts
 
-- L2コンストラクトを利用し、ビルドプロジェクトを定義しています。
+- L2コンストラクト`PipelineProject`を利用し、CodeBuildのビルドプロジェクトを定義しています。
 - CodeArtifactに対するトークン発行と公開も行う為、実行IAMロールに対する権限付与も`attachInlinePolicy`で定義しています。
+
+```typescript
+buildRole.attachInlinePolicy(codeArtifactAccessPolicy);
+```
 
 ```typescript:codebuild.ts
 import * as codebuild from 'aws-cdk-lib/aws-codebuild';
@@ -289,7 +317,7 @@ export class Codebuild extends Construct {
 
 #### codepipeline.ts
 
-- L2コンストラクトを利用し、接続設定を利用する事でGitHubからのソース取得を可能としているSourceステージと、CodeBuildを呼び出す為のBuildステージを定義しています。
+- L2コンストラクト`Pipeline`を利用し、接続設定を利用する事でGitHubからのソース取得を可能としている`Source`ステージと、CodeBuildを呼び出す為の`Build`ステージを定義しています。
 - `props.CfnConnection.attrConnectionArn`という形で接続設定のArnを取得する事で、ソースコード上にAWSアカウントIDをべた書きしなくて良いようにしています。
 
 ```typescript:codepipeline.ts
@@ -348,15 +376,28 @@ export class CodePipeline extends Construct {
 }
 ```
 
-### build.gradleの内容
+## Gradleプロジェクト内の設定内容
 
-先程のBuildspec内に記載のある、CodeArtifactへの公開処理が行われる際の設定として用いられる`build.gradle`について紹介します。
+### Gradleプロジェクトのディレクトリ
+
+- `lib`配下の`build.gradle`が、Gradleでのビルドに関する主なファイルとなっています。
+- `lib/src`配下にJavaクラスファイルが記載されています。
+
+![gradle-dir.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/b2c1f0c2-df38-fd71-0300-87449ae66317.png)
+
+### CodeBuild側からの呼び出し内容
+
+- CodeBuildの`Buildspec`では、以下の形でディレクトリ`gradle-sample`へと移動し、JAR公開のコマンド`publishAllPublicationsToMavenRepository`を実行しています。
 
 ```yaml:buildspec.yml
     commands:
       - cd $CODEBUILD_SRC_DIR/gradle-sample
       - gradle publishAllPublicationsToMavenRepository
 ```
+
+### build.gradleの設定
+
+CodeArtifactへの公開処理が行われる際の設定として用いられる`build.gradle`について紹介します。
 
 - `publications`では、Mavenリポジトリに対する公開処理なので、`groupId`、`artifactId`、`version`を指定しています。
   - この内容で公開されるので、逆にこのJARを利用する場合にも同じ指定をする必要があります。
@@ -389,11 +430,12 @@ publishing {
 
 ## リソースの構築とJARの公開手順
 
-いよいよ上記リポジトリを用いたリソースの構築に入ります。
+いよいよ上記リポジトリを用いたリソースの構築に入ります。  
+リポジトリの詳細については、[GitHub上のパブリックリポジトリ](https://github.com/yoyoyo-pg/gradle-publish-sample)として公開しています。
 
-### cdk deploy
+### CDKのスタックデプロイ
 
-CDKのスタックデプロイとして、`cdk deploy GradlePublishSampleStack`を実行します。
+- CDKのスタックデプロイとして、`cdk deploy GradlePublishSampleStack`を実行します。
 
 ```powershell
 PS C:\Users\git\gradle-publish-sample> cdk deploy GradlePublishSampleStack
@@ -413,49 +455,44 @@ arn:aws:cloudformation:ap-northeast-1:XXXXXXXXXXX:stack/GradlePublishSampleStack
 
 ```
 
-作成されるのがこちらのスタックです。
+- 以下スタックが構築されます。
 
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/f8e7f343-68cd-8388-8f67-9f87b1040d1d.png)
 
-この時点で、一通りのAWSリソースが構築されている事が分かります。
+- この時点で、上記で紹介した一通りのAWSリソースが構築されている事が分かります。
 
-### GitHubへの接続設定
+### GitHubへの接続設定の完了
 
-接続設定はGitHub側での許可が必要なため、`cdk deploy`後に「接続中」の表示となります。
+- 接続設定はGitHub側での許可が必要なため、`cdk deploy`後に「接続中」の表示となります。
 
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/1cd2ef9b-2fcf-0e05-a65f-1b86e9be8e36.png)
 
-「接続中」の接続を選択し、「保留中の接続を更新」をクリックします。
+- 「接続中」の接続を選択し、「保留中の接続を更新」をクリックします。
 
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/9dd1e362-1b28-c997-cf8f-2bf9f32dae6e.png)
 
-別ウィンドウが出てくるので、そちらで接続をします。
+- 別ウィンドウが出てくるので、そちらで接続をします。
 
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/11e9f7db-bf2c-deb3-6653-1e0697f2b740.png)
 
-「新しいアプリをインストールする」を選択した場合は、以下の様なGitHub側の画面から、接続許可するリポジトリを選択します。
+- 「新しいアプリをインストールする」を選択した場合は、以下の様なGitHub側の画面から、接続許可するリポジトリを選択します。
 
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/6a2db515-c808-d80e-a89d-cb72305af087.png)
 
-ここまで来たら、接続には成功です。
+- ここまで来たら、接続には成功です。
 
 ![codestar-connection.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/6f651c75-6799-88d0-3854-4de71f3474eb.png)
 
 ### JARの公開
 
-接続設定が済んだ時点で、パイプラインは完成です。
-
-後は`main`ブランチに対してコミットをするか、手動でパイプラインを動かしたら、自動的にCodeArtifactに対してJARが公開されるようになります。
+- 接続設定が済んだ時点で、CodeArtifactへのJAR公開のパイプラインは完成です。
+- 後は`main`ブランチに対してコミットをするか、手動でパイプラインを動かすと、自動的にCodeArtifactに対してJARが公開されるようになります。
 
 ![codepipeline.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/5acadb15-861b-0d78-0743-6f975ca812f2.png)
 
-パイプラインが起動するとBuildステージまで成功し、CodeArtifact上にも`JarSample`パッケージとしてJARが反映されている事が分かります。
+- パイプラインが起動するとBuildステージまで成功し、CodeArtifact上にも`JarSample`パッケージとしてJARが反映されている事が分かります。
 
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/92f91766-02ec-4cfe-be6d-7cc4e47f1a38.png)
-
-## おわりに
-
-- 今回紹介しきれなかった`build.gradle`内の「AWSアカウントIDやクレデンシャルを隠蔽する工夫」については別記事で紹介します。
 
 ## 参考文献
 
