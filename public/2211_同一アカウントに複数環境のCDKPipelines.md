@@ -6,7 +6,7 @@ tags:
   - aws-cdk
   - CDK
 private: false
-updated_at: '2024-02-11T15:49:15+09:00'
+updated_at: '2024-03-16T08:45:40+09:00'
 id: ddda3fdb809712deb70d
 organization_url_name: null
 slide: false

@@ -7,7 +7,7 @@ tags:
   - CDK
   - claude3
 private: false
-updated_at: '2024-03-16T08:02:55+09:00'
+updated_at: '2024-03-16T08:45:28+09:00'
 id: dc3c0e5f4c9af9be9214
 organization_url_name: null
 slide: false
@@ -191,7 +191,7 @@ export const handler = async (event: any) => {
 
 - デプロイ完了時
 
-![deploy-complete.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/62e7078b-9f4b-5861-545c-fc4bb1c3b95e.png)
+![62e7078b-9f4b-5861-545c-fc4bb1c3b95e.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/439678f2-e383-7437-5962-0a9416316f3f.png)
 
 - この時点で、上記に示した構成がCloudFormationのスタックとしてデプロイされています。
 - 実はこれもCDKの凄い所なのですが、明示していないLambdaの実行ロールも自動生成してくれます。

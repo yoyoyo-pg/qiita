@@ -4,7 +4,7 @@ tags:
   - CodePipeline
   - CodeStar
 private: false
-updated_at: '2024-02-11T16:46:39+09:00'
+updated_at: '2024-03-16T08:45:41+09:00'
 id: 91ae1c67d43fb3313e0d
 organization_url_name: null
 slide: false

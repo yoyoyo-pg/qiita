@@ -4,7 +4,7 @@ tags:
   - lambda
   - CDK
 private: false
-updated_at: '2024-02-11T16:41:18+09:00'
+updated_at: '2024-03-16T08:45:40+09:00'
 id: aa7cdaa678d74c6842f9
 organization_url_name: null
 slide: false
