@@ -7,7 +7,7 @@ tags:
   - CDK
   - claude3
 private: false
-updated_at: '2024-03-15T23:41:17+09:00'
+updated_at: '2024-03-15T23:57:22+09:00'
 id: dc3c0e5f4c9af9be9214
 organization_url_name: null
 slide: false
@@ -16,7 +16,8 @@ ignorePublish: false
 ## はじめに
 
 - 今回は、今話題の [Claude 3](https://claude.ai/) で[AWS CDK](https://aws.amazon.com/jp/cdk/)というAWSインフラのプロビジョニングツールを使い、簡易的なメール通知の仕組みを作成しました。
-- 基本的にはClaude 3に聞いて作っておりAWS CDKの最初のセットアップ以外はコードを全く書いていませんので、基本的にどなたにもお試し頂ける構成だと思います。
+- 基本的にはClaudeに尋ねながら構築を行っており、AWS CDKの最初のセットアップ以外はコードをほとんど書いていません。
+- なので、AWS CDKに馴染みが無い方でも、最初のセットアップさえ出来れば、Claudeを活用しながら、どなたでもAWS CDKをご活用頂けるのではと考えております。
 
 ## 技術要素の紹介
 
