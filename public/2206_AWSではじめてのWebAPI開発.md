@@ -7,7 +7,7 @@ tags:
   - lambda
   - APIGateway
 private: false
-updated_at: '2024-02-12T16:29:09+09:00'
+updated_at: '2024-03-15T12:38:53+09:00'
 id: 39c6100646b4526be60d
 organization_url_name: null
 slide: false
