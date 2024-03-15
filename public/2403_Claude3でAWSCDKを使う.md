@@ -7,7 +7,7 @@ tags:
   - CDK
   - claude3
 private: false
-updated_at: '2024-03-15T23:57:22+09:00'
+updated_at: '2024-03-16T08:02:55+09:00'
 id: dc3c0e5f4c9af9be9214
 organization_url_name: null
 slide: false
@@ -42,9 +42,23 @@ https://qiita.com/Brutus/items/6c8d9bfaab7af53d154a
 
 https://qiita.com/yoyoyo_pg/items/e7e85839341d16006b87
 
-### Claude 3 で使われる AWS CDK について
+### AWS CDK と 生成AIを組み合わせると何が便利？
+
+- CDKは「普段なじみのあるプログラム言語」でインフラを記載できるのが特徴の一つです。
+- ただ、人によっては普段プログラムを書かないので触ってみることに抵抗がある方もいらっしゃるのではと思います。
+- そこで出番となるのが生成AIで、特に今回触ってみたClaude 3はかなり精度が高く意図したCDKのコードを生成してくる印象です。
+
+### CDK は何から学習するのがオススメか
+
+- 個人的には、まずAWSのBlack Beltを視聴、または資料に目を通してみることをオススメします。
+- CDKの基本的な概念や、どういった学習リソースがあるかが分かります。
+
+https://www.youtube.com/watch?v=BmCpa44rAXI
+
+### Claude 3 で使われる CDK について
 
 - 私はCDK v2になってから使い始めたのですが、以前利用していたChatGPT（GPT-3.5）は、CDK v2リリースから日が浅いのか、CDK v2のコードを出力するには少し物足りない印象がありました。
+- CDK v1は2023 年 6 月 1 日にサポートを終了している為、基本的にはv2を使うといいと思います。
 - 今回は、学習データも溜まっていそうだという期待を込め、Claude 3にCDKの出力を依頼してみた背景もあります。
   - なお、Claude 3に直接尋ねてみると、2023年8月時点までの情報を利用しているとの返答があります。
   - [github - aws/aws-cdkのrelease](https://github.com/aws/aws-cdk/releases)を見る限りだと、2023年の8月には既にv2.90.0がリリースされている為、少なくともCDK v2の情報を保持している事が分かります。
