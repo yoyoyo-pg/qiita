@@ -7,7 +7,7 @@ tags:
   - CDK
   - claude3
 private: false
-updated_at: '2024-03-16T08:45:28+09:00'
+updated_at: '2024-03-18T07:51:31+09:00'
 id: dc3c0e5f4c9af9be9214
 organization_url_name: null
 slide: false
@@ -102,13 +102,38 @@ https://www.d-make.co.jp/blog/2023/12/19/aws-application-composer-in-vscode/
 ### 下準備
 
 - CDKプロジェクト用のディレクトリ作成と、`cdk init`を済ませます。
-- こちらに関しては、以下ドキュメントが参考になります。
+- TypeScriptの場合は、以下ドキュメントが参考になります。
+
+> To work with the AWS CDK, you must have an AWS account and credentials and have installed Node.js and the AWS CDK Toolkit. See Getting started with the AWS CDK.
+You also need TypeScript itself (version 3.8 or later). If you don't already have it, you can install it using npm.
+
+https://docs.aws.amazon.com/ja_jp/cdk/v2/guide/work-with-cdk-typescript.html
 
 https://docs.aws.amazon.com/ja_jp/cdk/v2/guide/hello_world.html
+
+- 要約すると`Node.js`、`TypeScript`、`CDK`のインストールと、AWSアカウントの認証情報が必要です
+- 私の場合は、以下バージョンを手元の環境で利用しています
+
+```powershell
+PS C:\Users\yoyoyo-pg> cdk --version
+2.118.0 (build a40f2ec)
+PS C:\Users\yoyoyo-pg> node -v
+v20.11.1
+PS C:\Users\yoyoyo-pg> tsc -v
+Version 5.4.2
+```
 
 なお、今回構築したサンプルコードはGitHubリポジトリ上に公開しています。
 
 https://github.com/yoyoyo-pg/sns-sample
+
+### CDKプロジェクトのセットアップ
+
+下記コマンドを実施する事で、CDKプロジェクトのセットアップを行います。
+
+```powershell
+cdk init app --language typescript
+```
 
 ### CDKコードの追記
 
