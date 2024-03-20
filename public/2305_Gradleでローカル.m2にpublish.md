@@ -4,7 +4,7 @@ tags:
   - Maven
   - gradle
 private: false
-updated_at: '2024-03-16T08:45:40+09:00'
+updated_at: '2024-03-20T19:15:23+09:00'
 id: 61ea8dc2e4e434f53f99
 organization_url_name: null
 slide: false
@@ -215,6 +215,8 @@ publishing {
 ## Mavenのローカルリポジトリにpublish
 
 `gradle-sample`ディレクトリ上で `.\gradlew publishToMavenLocal`を実行します。
+
+[Publishing to Maven Local](https://docs.gradle.org/current/userguide/publishing_maven.html#publishing_maven:install)
 
 ```powershell
 PS C:\Users\yoyoyo-pg\workspace\gradle-sample> .\gradlew publishToMavenLocal                                                            
