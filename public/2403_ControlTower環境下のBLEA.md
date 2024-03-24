@@ -6,7 +6,7 @@ tags:
   - ControlTower
   - BLEA
 private: false
-updated_at: '2024-03-24T17:24:38+09:00'
+updated_at: '2024-03-24T17:26:44+09:00'
 id: f9f1a392e62eb8ed2903
 organization_url_name: null
 slide: false
@@ -14,7 +14,7 @@ ignorePublish: false
 ---
 ## はじめに
 
-Control Tower と BLEA を用いたゲストアカウントのセットアップについて、BLEA 公式GitHubの`README`から概要をまとめました
+Control Tower と BLEA を用いたゲストアカウントのセットアップについて、BLEA 公式のGitHubの`README`から概要をまとめました
 
 ## 前提
 
@@ -22,7 +22,7 @@ Control Tower と BLEA を用いたゲストアカウントのセットアップ
 
 ## BLEAとは
 
-- Baseline-Environment-n-AWS の略です
+- Baseline-Environment-on-AWS の略です
 - スタンドアロン又は Control Tower ベースのマルチアカウントAWS環境において、安全なベースラインを確立するためのCDKテンプレートです
 - [aws-samples / baseline-environment-on-aws](https://github.com/aws-samples/baseline-environment-on-aws)上にコードが公開されています
 
