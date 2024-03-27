@@ -3,7 +3,7 @@ title: GradleのContainuous Buildsを使い、タスクの自動実行を実現�
 tags:
   - gradle
 private: false
-updated_at: '2024-03-27T22:12:50+09:00'
+updated_at: '2024-03-27T22:17:53+09:00'
 id: d9ec078365167b89c6c1
 organization_url_name: null
 slide: false
@@ -94,3 +94,7 @@ Waiting for changes to input files... (ctrl-d then enter to exit)
 - ファイルが更新されている事が分かります
 
 ![second-publish.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/411902/765420b1-b012-f9e5-0219-9529821dbfd4.png)
+
+## 参考文献
+
+[Gradle User Manual - Continuous Builds](https://docs.gradle.org/current/userguide/continuous_builds.html)
