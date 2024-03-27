@@ -3,7 +3,7 @@ title: GradleのContainuous Buildsを使い、タスクの自動実行を実現�
 tags:
   - gradle
 private: false
-updated_at: '2024-03-27T22:01:49+09:00'
+updated_at: '2024-03-27T22:04:34+09:00'
 id: d9ec078365167b89c6c1
 organization_url_name: null
 slide: false
@@ -13,14 +13,14 @@ ignorePublish: false
 
 普段実行しているGradleコマンドに`-t`または`--continuous`を付ける事で、ファイルが変更された時のタスクの再実行が可能です。
 
-## ローカルMavenリポジトリへの反映
+## 実現したかったこと
 
 最近は以下の記事のようなGradleを用いたJARライブラリのビルド環境を整えているのですが、
 
 - [Qiita - GradleでMavenローカルリポジトリにpublishをする](https://qiita.com/yoyoyo_pg/items/61ea8dc2e4e434f53f99)
 - [Qiita - CodeArtifactでのJAR公開パイプラインをAWSで実現する](https://qiita.com/yoyoyo_pg/items/1647d65f5b4ae4ae4270)
 
-手元の環境でJARライブラリを開発する時に、`.m2`への反映の自動実行として`Containuous Build`が上手く利用できそうでした。
+手元の環境でJARライブラリを開発する時に、ローカルMavenリポジトリ`.m2`への反映の自動実行として`Containuous Build`が上手く利用できそうでした。
 
 ## 試してみる
 
