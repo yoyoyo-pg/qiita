@@ -22,6 +22,12 @@ ignorePublish: false
 
 手元の環境でJARライブラリを開発する時に、ローカルMavenリポジトリ`.m2`への反映の自動実行として`Containuous Build`が上手く利用できそうでした。
 
+## 動作環境
+
+Windows 11  
+Gradle 8.6  
+openjdk 20.0.2  
+
 ## 試してみる
 
 - 試しに`publishToMavenLocal`を実行します
