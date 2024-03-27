@@ -3,7 +3,7 @@ title: GradleのContainuous Buildsを使い、タスクの自動実行を実現�
 tags:
   - gradle
 private: false
-updated_at: '2024-03-27T22:04:34+09:00'
+updated_at: '2024-03-27T22:12:50+09:00'
 id: d9ec078365167b89c6c1
 organization_url_name: null
 slide: false
