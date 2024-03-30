@@ -4,7 +4,7 @@ tags:
   - Maven
   - gradle
 private: false
-updated_at: '2024-03-27T22:16:48+09:00'
+updated_at: '2024-03-30T20:00:03+09:00'
 id: 61ea8dc2e4e434f53f99
 organization_url_name: null
 slide: false
