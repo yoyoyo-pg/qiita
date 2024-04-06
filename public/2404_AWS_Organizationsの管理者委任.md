@@ -4,7 +4,7 @@ tags:
   - AWS
   - Organizations
 private: false
-updated_at: '2024-04-06T17:37:44+09:00'
+updated_at: '2024-04-06T17:41:20+09:00'
 id: 1b052664f9d9fb9498ff
 organization_url_name: null
 slide: false
@@ -94,8 +94,3 @@ An error occurred (ConstraintViolationException) when calling the RegisterDelega
 ### 補足
 
 Organizations のサービスアクセスの許可や管理者委任のコマンドについては、[こちらの記事](https://dev.classmethod.jp/articles/manage-aws-organizations-service-integration-and-delegation-from-cli/)が参考になりました
-
-## おわりに
-
-- サービスアクセス許可や管理者委任の概念の理解が足りておらず、設定に手間取ってしまいました
-- Organizations の知識を前提として、AWS Control Tower を利用する必要があると改めて感じました
